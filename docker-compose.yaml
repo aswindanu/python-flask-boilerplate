@@ -1,0 +1,18 @@
+version : '3'
+
+services:
+  debug:
+    image: python:starter
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    container_name: python_starter
+    volumes:
+      - .:/app
+
+networks: 
+  default:
+    external:
+      name: my-shared-network
