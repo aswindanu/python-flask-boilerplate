@@ -1,3 +1,5 @@
+Credited to: Faviansyah Arianda Pallas (https://github.com/favians)
+
 # Starter python for REST API
 
 this project using this kind of library:
