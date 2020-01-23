@@ -105,6 +105,9 @@ class ClientResource(Resource):
 
         return {"status":"success", "result":"Data with ID " + args["id"] + "Deleted"}, 200, {'Content-Type':'application/json'}
 
+    def options(self):
+        return {}, 200
+
 class ClientList(Resource):
 
     def __init__(self):
@@ -131,6 +134,9 @@ class ClientList(Resource):
             result.append(marshal(row,Clients.response_field))
         
         return {"status":"success", "result":result}, 200, {'Content-Type':'application/json'}
+
+    def options(self):
+        return {}, 200
 
 
 

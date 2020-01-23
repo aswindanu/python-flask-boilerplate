@@ -37,4 +37,7 @@ class CreateTokenResource(Resource):
         claims = get_jwt_claims()
         return {"status":"success", 'result': claims}, 200, {'Content-Type':'application/json'}
 
+    def options(self):
+        return {}, 200
+
 api.add_resource(CreateTokenResource,'')

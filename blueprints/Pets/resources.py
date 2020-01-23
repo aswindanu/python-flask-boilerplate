@@ -89,6 +89,9 @@ class PetsResource(Resource):
 
         return {"status":"success", "result":marshal(qry, Pets.response_field)}, 200, {"Content-Type":"application/json"}
 
+    def options(self):
+        return {}, 200
+
 class PetsResourceList(Resource):
 
     @jwt_required
@@ -126,6 +129,9 @@ class PetsResourceList(Resource):
         
         return {"status":"success", "result":results}, 200, {"Content-Type":"application/json"}
 
+    def options(self):
+        return {}, 200
+
 class PetsWithClient(Resource):
 
     @jwt_required
@@ -143,6 +149,9 @@ class PetsWithClient(Resource):
             return {"status":"success", "result":result}, 200, {"Content-Type":"application/json"}
 
         return {"status":"failed","result":"ID Not Found"}, 404, {"Content-Type":"application/json"}
+
+    def options(self):
+        return {}, 200
 
 api.add_resource(PetsResource, "","")
 api.add_resource(PetsResourceList, "/list")

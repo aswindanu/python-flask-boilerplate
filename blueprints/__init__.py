@@ -13,6 +13,9 @@ from datetime import timedelta
 #wrap
 from functools import wraps
 
+# CORS
+from flask_cors import CORS
+
 #Load ENV Python
 import os
 from dotenv import load_dotenv
@@ -25,6 +28,7 @@ load_dotenv(dotenv_path=env_path)
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['APP_DEBUG'] = True
 
 #################
