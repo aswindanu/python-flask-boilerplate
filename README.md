@@ -1,4 +1,4 @@
-#### This code was credited n copyright: Faviansyah Arianda Pallas (https://github.com/favians)
+#### This code was edited. Source credited n copyright: Faviansyah Arianda Pallas (https://github.com/favians)
 
 # Starter python for REST API
 
