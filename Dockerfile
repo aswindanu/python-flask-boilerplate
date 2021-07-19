@@ -1,7 +1,5 @@
 FROM python:3.7.5-slim-stretch
 
-MAINTAINER Vian "Faviansyah"
-
 WORKDIR /app
 
 RUN mkdir storage && \

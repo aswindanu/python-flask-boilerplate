@@ -1,22 +1,25 @@
 from flask import Flask, request
 import json
 
-##database import###
+## database import###
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate, MigrateCommand
-from flask_migrate import Manager
+from flask_migrate import Migrate
 
-##JWT import
-from flask_jwt_extended import JWTManager, verify_jwt_in_request, get_jwt_claims
+## JWT import
+from flask_jwt_extended import (
+    JWTManager,
+    verify_jwt_in_request,
+    get_jwt
+)
 from datetime import timedelta
 
-#wrap
+# wrap
 from functools import wraps
 
 # CORS
 from flask_cors import CORS
 
-#Load ENV Python
+# Load ENV Python
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -44,7 +47,7 @@ def internal_required(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
-        claims = get_jwt_claims()
+        claims = get_jwt()
         if not claims['status']:
             return {'status':'failed', 'message':'FORBIDDEN | Internal Only'}, 403
         else:
@@ -56,7 +59,7 @@ def non_internal_required(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
-        claims = get_jwt_claims()
+        claims = get_jwt()
         if claims['status']:
             return {'status':'failed', 'message':'FORBIDDEN | JWT NEEDED'}, 403
         else:
@@ -74,8 +77,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)  # command 'db' dapat menjalankan semua command MigrateCommand
+# DEPRECATED (using Manager & MigrateCommand)
+# manager = Manager(app)
+# manager.add_command('db', MigrateCommand)  # command 'db' dapat menjalankan semua command MigrateCommand
 
 ###########Middleware#############
 @app.after_request
@@ -99,9 +103,9 @@ def after_request(response):
 # Import blueprints
 ###############################
 
-from blueprints.Auth import bp_auth
-from blueprints.Client.resources import bp_client
-from blueprints.Pets.resources import bp_pets
+from blueprints.auth import bp_auth
+from blueprints.client.resources import bp_client
+from blueprints.pets.resources import bp_pets
 
 app.register_blueprint(bp_auth, url_prefix='/login')
 app.register_blueprint(bp_client, url_prefix='/client' )

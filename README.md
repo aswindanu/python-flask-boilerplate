@@ -1,5 +1,3 @@
-#### This code was edited. Source credited n copyright: Faviansyah Arianda Pallas (https://github.com/favians)
-
 # Starter python for REST API
 
 this project using this kind of library:
@@ -11,20 +9,40 @@ this project using this kind of library:
 
 #### How to Start Project
 1. Clone this project:
-```git clone https://github.com/favians/python_restAPI_starter.git```
+    ```git clone https://github.com/favians/python_restAPI_starter.git```
+
 2. Create env:
-```python3 -m venv env```
-3. Activate ENV:
-```source env/bin/activate```
+    ```python -m venv env```
+
+3. Activate ENV (Linux/OSX):
+    ```source env/bin/activate```
+
 4. install requirements:
-```pip install -r requirements.txt```
+    ```pip install -r requirements.txt```
+
 5. configure your env in .env file
+
+    - JWT_SECRET=
+    - DATABASE_USER=
+    - DATABASE_PASSWORD=
+    - DATABASE_HOST=
+    - DATABASE_PORT=
+    - DATABASE_NAME=
 6. migrate the database:
-```python3 app.py db migrate```
+    ```flask db migrate```
 7. upgrade database:
-```python3 app.py db upgrade```
+    ```flask db upgrade```
 8. run the program:
-```python3 app.py```
+    ```flask run```
 
 #### Run with Docker Compose
 ```docker-compose up```
+
+#### Update requirements (virtualenv only)
+```pip freeze -l > requirements.txt```
+
+#### Reset migration db
+delete migrations, then use ```flask db init```
+
+#### (OPT) Windows note
+Note for windows can be seen at win_note.txt

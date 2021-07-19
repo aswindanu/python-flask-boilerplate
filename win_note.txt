@@ -1,0 +1,10 @@
+## POWERSHELL
+
+# CHECK ENV WINDOWS
+dir env:
+
+# Go To C:
+C:
+
+# Make env activated VSCODE (https://stackoverflow.com/questions/4037939/powershell-says-execution-of-scripts-is-disabled-on-this-system)
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser

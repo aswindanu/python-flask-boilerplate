@@ -3,10 +3,10 @@ from flask import Blueprint
 from flask_restful import Resource, Api, reqparse, marshal, inputs
 
 from blueprints import internal_required, non_internal_required
-from flask_jwt_extended import jwt_required, get_jwt_claims
+from flask_jwt_extended import jwt_required, get_jwt
 
 from .model import Pets
-from blueprints.Client.model import Clients
+from blueprints.client.model import Clients
 
 from blueprints import db, app
 from sqlalchemy import desc
@@ -38,7 +38,7 @@ class PetsResource(Resource):
         parser.add_argument("pet_type",location="json", help="invalid pet_type", required=True)
         args = parser.parse_args()
         
-        claims = get_jwt_claims()
+        claims = get_jwt()
 
         qry = Pets(datetime.datetime.now(), args["pet_name"], args["pet_type"],claims["id"])
 

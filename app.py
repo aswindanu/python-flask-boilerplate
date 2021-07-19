@@ -2,12 +2,15 @@ from flask import Flask, request
 from flask_restful import Api
 import logging, sys
 from logging.handlers import RotatingFileHandler
-from flask_sqlalchemy import SQLAlchemy
 
 
-from blueprints import app, manager
+from blueprints import (
+    app,
+    migrate,
+)
 
-from werkzeug.contrib.cache import SimpleCache
+from cachelib import SimpleCache
+
 
 cache = SimpleCache()
 
@@ -26,7 +29,7 @@ if __name__ == '__main__':
 
     try:
         if sys.argv[1] == 'db':
-            manager.run()
+            migrate.run()
             sys.exit()
         else:
             app.run(debug = True, host = '0.0.0.0', port = 5000)
