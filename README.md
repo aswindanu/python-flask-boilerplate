@@ -22,6 +22,7 @@ this project using this kind of library:
 
 5. configure your env in .env file
 
+    - DEBUG=
     - JWT_SECRET=
     - DATABASE_USER=
     - DATABASE_PASSWORD=

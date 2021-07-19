@@ -7,6 +7,7 @@ from logging.handlers import RotatingFileHandler
 from blueprints import (
     app,
     migrate,
+    DEBUG
 )
 
 from cachelib import SimpleCache
@@ -32,8 +33,8 @@ if __name__ == '__main__':
             migrate.run()
             sys.exit()
         else:
-            app.run(debug=True, host = '0.0.0.0', port=5000)
+            app.run(debug=DEBUG, host = '0.0.0.0', port=5000)
     except IndexError as e:
         # define log format and create a rotating log with max size of 1mb and max backup to 10 files
-        app.run(debug=True, host='0.0.0.0', port=5000)
+        app.run(debug=DEBUG, host='0.0.0.0', port=5000)
 

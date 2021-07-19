@@ -29,13 +29,16 @@ load_dotenv()
 
 # OR, explicitly providing path to '.env'
 from pathlib import Path  # python3 only
+from json import loads
 env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 
 app = Flask(__name__)
 CORS(app)
-app.config['APP_DEBUG'] = True
+
+DEBUG = loads(os.getenv("DEBUG").lower())
+app.config['APP_DEBUG'] = DEBUG
 
 #################
 # JWT
