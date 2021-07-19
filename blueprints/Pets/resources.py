@@ -17,7 +17,7 @@ api = Api(bp_pets)
 
 class PetsResource(Resource):
 
-    @jwt_required
+    @jwt_required()
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id',location='args', help='invalid id', required=True)
@@ -31,7 +31,7 @@ class PetsResource(Resource):
         return {'status':'failed',"result":"ID Not Found"}, 404, {'Content-Type':'application/json'}
 
 
-    @jwt_required
+    @jwt_required()
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("pet_name",location="json", help="invalid pet_name", required=True)
@@ -49,7 +49,7 @@ class PetsResource(Resource):
 
         return {"status":"success", "result":marshal(qry, Pets.response_field)}, 200, {"Content-Type":"application/json"}
 
-    @jwt_required
+    @jwt_required()
     def put(self):
         parser = reqparse.RequestParser()
         parser.add_argument("id",location="args", help="invalid id", required=True)
@@ -70,7 +70,7 @@ class PetsResource(Resource):
         return {"status":"success", "result":marshal(qry, Pets.response_field)}, 200, {"Content-Type":"application/json"}
 
     
-    @jwt_required
+    @jwt_required()
     @internal_required
     def delete(self):
         return {"status":"failed", "result":"Delete Not Available Now, Please Contact Developer"}, 403, {"Content-Type":"application/json"}
@@ -94,7 +94,7 @@ class PetsResource(Resource):
 
 class PetsResourceList(Resource):
 
-    @jwt_required
+    @jwt_required()
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument("p", type=int, location="args", default=1)
@@ -134,7 +134,7 @@ class PetsResourceList(Resource):
 
 class PetsWithClient(Resource):
 
-    @jwt_required
+    @jwt_required()
     def get(self):
         qry = db.session.query(Pets, Clients).join(Pets, Pets.client_id == Clients.id).all()
         

@@ -18,7 +18,7 @@ api = Api(bp_client)
 
 class ClientResource(Resource):
 
-    @jwt_required
+    @jwt_required()
     @internal_required
     def get(self):
         parser = reqparse.RequestParser()
@@ -60,7 +60,7 @@ class ClientResource(Resource):
         
         return {"status":"failed", "result": "Wrong Password Length"}, 400, {'Content-Type':'application/json'}
 
-    @jwt_required
+    @jwt_required()
     def put(self):
         policy = PasswordPolicy.from_names(
             length=6
@@ -87,7 +87,7 @@ class ClientResource(Resource):
         
         return {"status":"failed", "result": "Wrong Password Length"}, 400, {'Content-Type':'application/json'}
 
-    @jwt_required
+    @jwt_required()
     @internal_required
     def delete(self):
         return {"status":"failed", "result":"Delete Not Available Now, Please Contact Developer"}, 403, {'Content-Type':'application/json'}
@@ -113,7 +113,7 @@ class ClientList(Resource):
     def __init__(self):
         pass
 
-    @jwt_required
+    @jwt_required()
     @internal_required
     def get(self):
         parser = reqparse.RequestParser()

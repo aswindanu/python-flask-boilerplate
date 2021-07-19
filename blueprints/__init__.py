@@ -80,7 +80,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-# DEPRECATED (using Manager & MigrateCommand)
+# DEPRECATED using Manager & MigrateCommand
 # manager = Manager(app)
 # manager.add_command('db', MigrateCommand)  # command 'db' dapat menjalankan semua command MigrateCommand
 
@@ -91,17 +91,15 @@ def after_request(response):
         requestData = request.get_json()
     except Exception as e:
         requestData = request.args.to_dict()
-    # print(response.data.decode('utf-8'))
-    # app.logger.warning("REQUEST_LOG\t%s", 
-    #     json.dumps({
-    #         'uri':request.full_path,
-    #         'code':response.status,
-    #         'method':request.method,
-    #         'request':requestData,
-    #         'response':json.loads(response.data.decode('utf-8'))}))
+    app.logger.warning("REQUEST_LOG\t%s", 
+        json.dumps({
+            'uri':request.full_path,
+            'code':response.status,
+            'method':request.method,
+            'request':requestData,
+            'response':json.loads(response.data.decode('utf-8'))}))
 
     return response
-
 
 ###############################
 # Swagger UI

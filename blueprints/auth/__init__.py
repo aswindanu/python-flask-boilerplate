@@ -21,18 +21,17 @@ class CreateTokenResource(Resource):
 
         qry = qry.filter_by(username = args['username'])
         qry = qry.filter_by(password = password).first()
-         
 
         claim = marshal(qry, Clients.response_field)
 
         if qry is not None:
-            token = create_access_token(identity=args['username'], user_claims=claim)
+            token = create_access_token(identity=args['username'], additional_claims=claim)
         else:
             return {'status':'failed', 'result': 'UNAUTHORIZED | invalid key or secret'}, 401
 
         return {"status":"success",'result': token}, 200, {'Content-Type':'application/json'}
 
-    @jwt_required
+    @jwt_required()
     def get(self):
         claims = get_jwt()
         return {"status":"success", 'result': claims}, 200, {'Content-Type':'application/json'}
