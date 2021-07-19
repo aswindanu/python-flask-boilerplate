@@ -19,6 +19,9 @@ from functools import wraps
 # CORS
 from flask_cors import CORS
 
+# Flask swagger UI
+from flask_swagger_ui import get_swaggerui_blueprint
+
 # Load ENV Python
 import os
 from dotenv import load_dotenv
@@ -88,16 +91,42 @@ def after_request(response):
         requestData = request.get_json()
     except Exception as e:
         requestData = request.args.to_dict()
-    app.logger.warning("REQUEST_LOG\t%s", 
-        json.dumps({
-            'uri':request.full_path,
-            'code':response.status,
-            'method':request.method,
-            'request':requestData,
-            'response':json.loads(response.data.decode('utf-8'))}))
+    # print(response.data.decode('utf-8'))
+    # app.logger.warning("REQUEST_LOG\t%s", 
+    #     json.dumps({
+    #         'uri':request.full_path,
+    #         'code':response.status,
+    #         'method':request.method,
+    #         'request':requestData,
+    #         'response':json.loads(response.data.decode('utf-8'))}))
 
     return response
 
+
+###############################
+# Swagger UI
+# See docs: https://pypi.org/project/flask-swagger-ui/
+###############################
+
+SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
+API_URL = 'http://petstore.swagger.io/v2/swagger.json'  # Our API url (can of course be a local resource)
+
+# Call factory function to create our blueprint
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+    API_URL,
+    config={  # Swagger UI config overrides
+        'app_name': "Flask application"
+    },
+    # oauth_config={  # OAuth config. See https://github.com/swagger-api/swagger-ui#oauth2-configuration .
+    #    'clientId': "your-client-id",
+    #    'clientSecret': "your-client-secret-if-required",
+    #    'realm': "your-realms",
+    #    'appName': "your-app-name",
+    #    'scopeSeparator': " ",
+    #    'additionalQueryStringParams': {'test': "hello"}
+    # }
+)
 
 ###############################
 # Import blueprints
@@ -107,6 +136,10 @@ from blueprints.auth import bp_auth
 from blueprints.client.resources import bp_client
 from blueprints.pets.resources import bp_pets
 
+# Swagger
+app.register_blueprint(swaggerui_blueprint)
+
+# App
 app.register_blueprint(bp_auth, url_prefix='/login')
 app.register_blueprint(bp_client, url_prefix='/client' )
 app.register_blueprint(bp_pets, url_prefix='/pets' )
