@@ -45,6 +45,12 @@ this project using this kind of library:
 10. run the program:
     ```flask run```
 
+#### Postman collection
+Collection & environment of Postman can be imported from this listed file
+
+    asyncio.postman_collection
+    asyncio.postman_environment
+
 #### Run with Docker Compose
 ```docker-compose up```
 
