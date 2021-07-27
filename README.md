@@ -39,8 +39,14 @@ this project using this kind of library:
 #### Run with Docker Compose
 ```docker-compose up```
 
-#### Update requirements (virtualenv only)
+#### Update requirements (virtualenv)
 ```pip freeze -l > requirements.txt```
+
+#### Update Swagger.json
+
+    - Update postman collection
+    - Update swagger.json by convert postman using coverter from `https://www.apimatic.io/transformer/` or `https://apitransform.com/`
+    - see `<domain>:<port>/api/docs`
 
 #### Reset migration db
 delete migrations, then use ```flask db init```

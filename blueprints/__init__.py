@@ -1,5 +1,9 @@
-from flask import Flask, request
-import json
+from flask import (
+    Flask,
+    request,
+    json,
+    current_app as apps,
+)
 
 ## database import###
 from flask_sqlalchemy import SQLAlchemy
@@ -39,6 +43,7 @@ CORS(app)
 
 DEBUG = loads(os.getenv("DEBUG").lower())
 app.config['APP_DEBUG'] = DEBUG
+app.config['PROPAGATE_EXCEPTIONS'] = DEBUG
 
 #################
 # JWT
@@ -76,7 +81,6 @@ def non_internal_required(fn):
 ####Database####
 
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:masukaja@0.0.0.0:3306/flaskstarter'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(os.getenv("DATABASE_USER"), os.getenv("DATABASE_PASSWORD"), os.getenv("DATABASE_HOST"), os.getenv("DATABASE_PORT"),  os.getenv("DATABASE_NAME"))
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -91,17 +95,19 @@ migrate = Migrate(app, db)
 @app.after_request
 def after_request(response):
     try:
-        requestData = request.get_json()
-    except Exception as e:
-        requestData = request.args.to_dict()
-    app.logger.warning("REQUEST_LOG\t%s", 
-        json.dumps({
-            'uri':request.full_path,
-            'code':response.status,
-            'method':request.method,
-            'request':requestData,
-            'response':json.loads(response.data.decode('utf-8'))}))
-
+        try:
+            requestData = request.get_json()
+        except Exception as e:
+            requestData = request.args.to_dict()
+        app.logger.warning("REQUEST_LOG\t%s", 
+            json.dumps({
+                'uri':request.full_path,
+                'code':response.status,
+                'method':request.method,
+                'request':requestData,
+                'response':json.loads(response.data.decode('utf-8'))}))
+    except Exception:  # Pass for swagger UI
+        pass
     return response
 
 ###############################
@@ -109,8 +115,15 @@ def after_request(response):
 # See docs: https://pypi.org/project/flask-swagger-ui/
 ###############################
 
+@app.route("/api/swagger.json")
+def create_swagger_spec():
+    filename = os.path.join(apps.root_path, '..', 'swagger.json')
+    with open(filename) as test_file:
+        data = json.load(test_file)
+        return data
+
 SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
-API_URL = 'http://petstore.swagger.io/v2/swagger.json'  # Our API url (can of course be a local resource)
+API_URL = '/api/swagger.json'  # Our API url (can of course be a local resource)
 
 # Call factory function to create our blueprint
 swaggerui_blueprint = get_swaggerui_blueprint(

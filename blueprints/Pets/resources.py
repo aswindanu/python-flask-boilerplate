@@ -97,14 +97,14 @@ class PetsResourceList(Resource):
     @jwt_required()
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("p", type=int, location="args", default=1)
-        parser.add_argument("rp",type=int, location="args", default=25)
+        parser.add_argument('page', type=int, location="args", default=1)
+        parser.add_argument('per_page',type=int, location="args", default=25)
         parser.add_argument("id",type=int,location="args", help="invalid pets id")
         parser.add_argument("pet_name",location="args", help="invalid isbn")
         parser.add_argument("pet_type",location="args", help="invalid isbn")
         args =parser.parse_args()
 
-        offset = (args["p"] * args["rp"]) - args["rp"]
+        offset = (args['page'] * args['per_page']) - args['per_page']
 
         qry = Pets.query
 
@@ -118,13 +118,13 @@ class PetsResourceList(Resource):
             qry = qry.filter_by(pet_type=args["pet_type"])
 
         result = []
-        for row in qry.limit(args["rp"]).offset(offset).all():
+        for row in qry.limit(args['per_page']).offset(offset).all():
             result.append(marshal(row, Pets.response_field))
         
         results = {}
-        results["page"] = args["p"]
-        results["total_page"] = len(result) // args["rp"] +1
-        results["per_page"] = args["rp"]
+        results["page"] = args['page']
+        results["total_page"] = len(result) // args['per_page'] +1
+        results["per_page"] = args['per_page']
         results["data"] = result
         
         return {"status":"success", "result":results}, 200, {"Content-Type":"application/json"}

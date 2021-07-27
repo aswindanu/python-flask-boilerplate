@@ -117,12 +117,12 @@ class ClientList(Resource):
     @internal_required
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('p', type=int, location='args', default=1)
-        parser.add_argument('rp',type=int, location='args', default=25)
+        parser.add_argument('page', type=int, location='args', default=1)
+        parser.add_argument('per_page',type=int, location='args', default=25)
         parser.add_argument('status',location='args', type=inputs.boolean, help='invalid status', choices=(True,False))
         args =parser.parse_args()
 
-        offset = (args['p'] * args['rp']) - args['rp']
+        offset = (args['page'] * args['per_page']) - args['per_page']
 
         qry = Clients.query
 
@@ -130,7 +130,7 @@ class ClientList(Resource):
             qry = qry.filter_by(status=args['status'])
 
         result = []
-        for row in qry.limit(args['rp']).offset(offset).all():
+        for row in qry.limit(args['per_page']).offset(offset).all():
             result.append(marshal(row,Clients.response_field))
         
         return {"status":"success", "result":result}, 200, {'Content-Type':'application/json'}
