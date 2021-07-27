@@ -51,7 +51,7 @@ this project using this kind of library:
 #### Update requirements (virtualenv)
 ```pip freeze -l > requirements.txt```
 
-#### Update Swagger UI (`/api/docs`)
+#### Update Swagger UI
 
     - Update postman collection
     - Update swagger.json by convert postman using coverter from `https://www.apimatic.io/transformer/` or `https://apitransform.com/`
