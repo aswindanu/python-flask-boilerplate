@@ -9,7 +9,7 @@ this project using this kind of library:
 
 #### How to Start Project
 1. Clone this project:
-    ```git clone https://github.com/favians/python_restAPI_starter.git```
+    ```git clone https://github.com/aswindanu/python-flask-starter.git flask_starter```
 
 2. Create env:
     ```python -m venv env```
@@ -17,10 +17,13 @@ this project using this kind of library:
 3. Activate ENV (Linux/OSX):
     ```source env/bin/activate```
 
-4. install requirements:
+4. GO to project dir:
+    ```cd flask_starter```
+
+5. install requirements:
     ```pip install -r requirements.txt```
 
-5. configure your env in .env file
+6. configure your env in .env file
 
     - DEBUG=
     - JWT_SECRET=
@@ -29,11 +32,17 @@ this project using this kind of library:
     - DATABASE_HOST=
     - DATABASE_PORT=
     - DATABASE_NAME=
-6. migrate the database:
+
+7. initiate the database:
+    ```flask db init```
+
+8. migrate the database:
     ```flask db migrate```
-7. upgrade database:
+
+9. upgrade database:
     ```flask db upgrade```
-8. run the program:
+
+10. run the program:
     ```flask run```
 
 #### Run with Docker Compose
@@ -42,7 +51,7 @@ this project using this kind of library:
 #### Update requirements (virtualenv)
 ```pip freeze -l > requirements.txt```
 
-#### Update Swagger.json
+#### Update Swagger UI (`/api/docs`)
 
     - Update postman collection
     - Update swagger.json by convert postman using coverter from `https://www.apimatic.io/transformer/` or `https://apitransform.com/`
