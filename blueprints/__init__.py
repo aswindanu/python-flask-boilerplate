@@ -112,7 +112,10 @@ def after_request(response):
 
 ###############################
 # Swagger UI
-# See docs: https://pypi.org/project/flask-swagger-ui/
+# See docs: 
+# https://pypi.org/project/flask-swagger-ui/
+# https://www.datascienceblog.net/post/programming/flask-api-development/
+# https://apispec.readthedocs.io/en/latest/
 ###############################
 
 @app.route("/api/swagger.json")
