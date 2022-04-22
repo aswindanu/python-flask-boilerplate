@@ -116,6 +116,7 @@ def after_request(response):
 # https://pypi.org/project/flask-swagger-ui/
 # https://www.datascienceblog.net/post/programming/flask-api-development/
 # https://apispec.readthedocs.io/en/latest/
+# FOR CLASS BLUEPRINT : https://flask-apispec.readthedocs.io/en/latest/usage.html
 ###############################
 
 @app.route("/api/swagger.json")
